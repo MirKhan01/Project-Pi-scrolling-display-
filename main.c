@@ -1,3 +1,9 @@
+n refactor the code and include the new function for scrolling behavior. This function will handle the movement of the dot and apply wrapping across the screen boundaries.
+
+Here's an updated version of your code with the dot_roll() function added:
+
+c
+Copy code
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -34,6 +40,24 @@ void handler(unsigned int code) {
     }
 }
 
+void dot_roll() {
+    // Apply scrolling velocities
+    xOffset += xVelocity;
+    yOffset += yVelocity;
+
+    // Wrap around to the start/end of the screen
+    if (xOffset >= 8) {
+        xOffset = 0;
+    } else if (xOffset < 0) {
+        xOffset = 7;
+    }
+    if (yOffset >= 8) {
+        yOffset = 0;
+    } else if (yOffset < 0) {
+        yOffset = 7;
+    }
+}
+
 int main(void) {
     open_display();
     open_input();
@@ -63,21 +87,8 @@ int main(void) {
         // Update velocities based on joystick input
         check_input(handler, 0);
 
-        // Apply scrolling velocities
-        xOffset += xVelocity;
-        yOffset += yVelocity;
-
-        // Wrap around to the start/end of the text
-        if (xOffset >= 8) {
-            xOffset = 0;
-        } else if (xOffset < 0) {
-            xOffset = 7;
-        }
-        if (yOffset >= 8) {
-            yOffset = 0;
-        } else if (yOffset < 0) {
-            yOffset = 7;
-        }
+        // Call dot_roll to update the dot's position and handle wrapping
+        dot_roll();
 
         // Clear display and show current initial at new position
         clear_display();
