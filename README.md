@@ -1,4 +1,5 @@
 # Project-Pi-scrolling-display-
+mirsaad@udel.edu
 Mir Sa'ad Ali Khan 
 702588948
 
